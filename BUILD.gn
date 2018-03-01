@@ -14,7 +14,10 @@ group("flutter") {
     "$flutter_root/third_party/txt",
   ]
 
-  if (flutter_runtime_mode != "debug") {
+  # Generate entry points JSON files for engines capable of AOT compilation and
+  # for host engine builds (as flutter_patched_sdk artifact is created from
+  # linux host_debug build).
+  if (flutter_runtime_mode != "debug" || current_toolchain == host_toolchain) {
     public_deps += [
       "$flutter_root/lib/snapshot:entry_points_json_files",
     ]
